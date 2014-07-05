@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
+using System.IO;
 
 namespace VKMessanger
 {
@@ -28,8 +30,18 @@ namespace VKMessanger
             AuthWindow window = new AuthWindow();
             window.ShowDialog();
             string token = window.AccesToken;
+            window.Close();
+            HttpWebResponse response = ExecuteRequest("messages.getDialogs", "", token);
+            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+            string resp = reader.ReadToEnd();
+            texbox.Text = resp;
 
- 
+        }
+        public static HttpWebResponse ExecuteRequest(string method_name, string parameters, string token)
+        {
+            WebRequest request = HttpWebRequest.Create(string.Format(
+            @"https://api.vk.com/method/{0}?{1}&access_token={2}", method_name, parameters, token));
+            return (HttpWebResponse)request.GetResponse();
         }
     }
 
