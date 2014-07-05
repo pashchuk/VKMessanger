@@ -1,8 +1,9 @@
 ﻿<Window x:Class="VKMessanger.AuthWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AuthWindow" Height="300" Width="300">
+        Title="AuthWindow" Height="460" Width="607">
     <Grid>
-        
+        <WebBrowser Name="browser" HorizontalAlignment="Left" Height="409" Margin="10,10,0,0" VerticalAlignment="Top" Width="579"/>
+
     </Grid>
 </Window>

@@ -19,9 +19,27 @@ namespace VKMessanger
     /// </summary>
     public partial class AuthWindow : Window
     {
+        public string AccesToken { get; private set; }
         public AuthWindow()
         {
             InitializeComponent();
+            string appid = "4447152";
+            string scope = "friends,photos,wall,messages,notifications";
+
+            string vkUri = "https://oauth.vk.com/authorize?client_id=" + appid + "&scope=" + scope +
+                "&redirect_uri=http://oauth.vk.com/blank.html&display=popup&response_type=token";
+            browser.Navigate(vkUri);
+            browser.LoadCompleted += (sender, e) =>
+            {
+                string url = ((WebBrowser)sender).Source.AbsoluteUri;
+                try
+                {
+                    string token = url.Split('#')[1].Split('=')[1];
+                    AccesToken = token;
+                    this.Hide();
+                }
+                catch { }
+            };
         }
     }
 }
